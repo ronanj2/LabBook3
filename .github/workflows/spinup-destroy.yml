@@ -4,7 +4,7 @@ on:
   pull_request:
     types: [labeled]
 
-  workflow_dispatch:
+  workflow_dispatch:  # Manually run workflow to spin up or destroy Azure resources.
     inputs:
       setupType:
         type: choice
@@ -24,9 +24,6 @@ jobs:
 
   setup-up-azure-resources:
     runs-on: ubuntu-latest
-
-    #if: ${{ github.event.inputs.setupType }} == 'spin up' ||
-    #    contains(github.event.pull_request.labels.*.name, 'spin up environment')
 
     if: github.event.inputs.setupType == 'spin up' || 
         contains(github.event.pull_request.labels.*.name, 'spin up environment')
@@ -62,9 +59,6 @@ jobs:
 
   destroy-azure-resources:
     runs-on: ubuntu-latest
-
-    #if: ${{ github.event.inputs.setupType }} == 'destroy' ||
-    #    contains(github.event.pull_request.labels.*.name, 'destroy environment') ||
 
     if: github.event.inputs.setupType == 'destroy' ||
         contains(github.event.pull_request.labels.*.name, 'destroy environment')
