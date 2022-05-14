@@ -21,36 +21,15 @@ env:
   AZURE_WEBAPP_NAME: ronanj2-ttt-app
 
 jobs:
-  start:
-    runs-on: ubuntu-latest
-
-    steps:
-      - id: SetupType
-        name: Determine if Create or Destroy
-        run: | 
-          $action = 'create'
-
-          echo "choice is ${{ github.event.inputs.setupType }}"
-
-          if ('${{ github.event.inputs.setupType }}' -eq 'destroy') {
-            $action = 'destroy' 
-          }
-
-          echo "action is $action"
-          echo "::set-output name=action::${action}"
-        shell: pwsh
-
-    outputs:
-      action: ${{ steps.SetupType.outputs.action }}
 
   setup-up-azure-resources:
     runs-on: ubuntu-latest
-    needs: start
 
     #if: ${{ github.event.inputs.setupType }} == 'spin up' ||
     #    contains(github.event.pull_request.labels.*.name, 'spin up environment')
 
-    if: needs.start.outputs.action == 'create'
+    if: github.event.inputs.setupType == 'spin up' || 
+        contains(github.event.pull_request.labels.*.name, 'spin up environment')
 
     steps:
       - name: Checkout repository
@@ -83,12 +62,12 @@ jobs:
 
   destroy-azure-resources:
     runs-on: ubuntu-latest
-    needs: start
 
     #if: ${{ github.event.inputs.setupType }} == 'destroy' ||
     #    contains(github.event.pull_request.labels.*.name, 'destroy environment') ||
 
-    if: ${{needs.start.outputs.action}} == 'destroy'
+    if: github.event.inputs.setupType == 'destroy' ||
+        contains(github.event.pull_request.labels.*.name, 'destroy environment')
 
     steps:
       - name: Checkout repository
