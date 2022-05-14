@@ -43,7 +43,7 @@ jobs:
           path: public
 
       - name: create image and store in Packages
-        uses: mattdavis0351/actions/docker-gpr@1.3.0
+        uses: mattdavis0351/actions/docker-gpr@1.3.1
         with:
           repo-token: ${{secrets.GITHUB_TOKEN}}
           image-name: ${{env.DOCKER_IMAGE_NAME}}
