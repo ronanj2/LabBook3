@@ -25,3 +25,8 @@ A complete series of step by step instructional videos that guide you through th
 ### Requirements  
 
 A Microsoft Azure account is required to complete this practical exercise. Through your GitHub developer pack you can avail of free access to 25+ Microsoft Azure cloud services and $100 in Azure credits. See: https://education.github.com/pack for further information.  
+
+. 
+
+
+staging test.
